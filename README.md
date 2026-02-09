@@ -9,13 +9,46 @@ Esta es una solución técnica desarrollada en **Laravel 11** para automatizar e
 - **Sistema de Auditoría:** Registro detallado de cada acción y cambio de estado en la base de datos.
 - **Simulación de Notificaciones:** Registro de envíos exitosos/fallidos en los logs del sistema.
 
-## 📝 Aclaraciones de la Implementación
+## Aclaraciones de la Implementación
 
 Para efectos de esta prueba técnica, se han tomado las siguientes decisiones de diseño:
 
-**Notificaciones:** Dado que es un entorno de prueba, no se configuró un servidor SMTP real. Las notificaciones (confirmación de radicación o rechazo) se están capturando mediante el driver `log`. Podrá verificar el "envío" de los correos revisando el archivo en: `storage/logs/laravel.log`.
+1. **Extracción de Datos (OCR):** Se utiliza la librería `smalot/pdfparser` junto con expresiones regulares para identificar patrones de NIT, números de contrato y montos, garantizando la limpieza de caracteres especiales.
+2. **Notificaciones:** Dado que es un entorno de prueba, las notificaciones se capturan mediante el driver `log`. Podrá verificar el "envío" de los correos revisando el archivo en: `storage/logs/laravel.log`.
 
 ## Requisitos Técnicos
 - **PHP:** 8.2 o superior
 - **Composer**
 - **MySQL / MariaDB**
+
+## 📖 Documentación de la API
+
+### 1. Radicar Documento
+Permite cargar un archivo (PDF/XML) para su procesamiento, extracción de datos y validación.
+
+- **URL:** `/api/documents/filing`
+- **Método:** `POST`
+- **Tipo de contenido:** `multipart/form-data`
+
+| Parámetro | Tipo | Obligatorio | Descripción |
+| :--- | :--- | :--- | :--- |
+| `file` | file | Sí | Archivo PDF o XML (Máx 10MB). |
+| `document_type` | string | Sí | Valores: `contractor_invoice`, `supplier_invoice`, `general_invoice`. |
+| `email` | string | Sí | Correo electrónico para notificaciones. |
+
+#### Ejemplo de Respuesta Exitosa (201 Created)
+```json
+{
+    "success": true,
+    "filing_number": "RAD-A1B2C3D4"
+}
+
+- Ejemplo de Error de Validación (422 Unprocessable Content) 
+
+{
+    "success": false,
+    "errors": [
+        "El número de contrato es requerido.",
+        "El NIT no es válido."
+    ]
+}
