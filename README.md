@@ -42,7 +42,7 @@ Permite cargar un archivo (PDF/XML) para su procesamiento, extracción de datos 
     "success": true,
     "filing_number": "RAD-A1B2C3D4"
 }
-Ejemplo de Error de Validación (422 Unprocessable Content)
+//Ejemplo de Error de Validación (422 Unprocessable Content)
 {
     "success": false,
     "errors": [
@@ -52,34 +52,34 @@ Ejemplo de Error de Validación (422 Unprocessable Content)
 }
 ```
 
-#### Instalación y Configuración
+## Instalación y Configuración
 
 Siga estos pasos para ejecutar el proyecto en su entorno local:
 
-1. Clonar el repositorio
+1. **Clonar el repositorio**
 
 git clone https://github.com/DavidGarcia117/Gestion-documentos-API.git
 cd Gestion-documentos-API
 
-2. Instalar dependencias de PHP
+2. **Instalar dependencias de PHP**
 
 composer install
 
-3. Configurar el archivo de entorno
+3. **Configurar el archivo de entorno**
 
 cp .env.example .env
 
 Nota: Edite el archivo .env y configure las credenciales de su base de datos local (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
 
-4. Generar la clave de aplicación y el enlace de almacenamiento
+4. **Generar la clave de aplicación y el enlace de almacenamiento**
 
 php artisan key:generate
 php artisan storage:link
 
-5. Ejecutar migraciones
+5. **Ejecutar migraciones**
 
 php artisan migrate
 
-6. Iniciar el servidor de desarrollo
+6. **Iniciar el servidor de desarrollo**
 
 php artisan serve
