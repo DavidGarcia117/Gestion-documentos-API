@@ -50,6 +50,7 @@ Ejemplo de Error de Validación (422 Unprocessable Content)
         "El NIT no es válido."
     ]
 }
+```
 
 #### Instalación y Configuración
 
